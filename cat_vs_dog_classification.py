@@ -14,13 +14,13 @@ else:
 # labeling mechanism / function
 def cat_or_dog(file_name):
     if file_name[0].isupper():
-        return "CAT"
+        return f"CAT-{confidence_level}"
     else:
-        return "DOG"
+        return f"DOG-{confidence_level}"
 
 cat_vs_dog_model = load_learner("cat_vs_dog_model2_17_9.pkl")
 
-st.markdown("<h1 style='color: yellow;'>Cat or Dog Classifier</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: pink;'>Cat or Dog Classifier</h1>", unsafe_allow_html=True)
 #st.title("Cat or Dog")
 st.text("Created by Gamas Chang")
 
@@ -31,15 +31,19 @@ if uploaded_file:
     prediction = cat_vs_dog_model.predict(resized_img)
     print(prediction)
     index = int(prediction[1])
-    confident_level = prediction[2][index] * 100
+    confidence_level = prediction[2]
+    confidence_level = confidence_level[index]
+    confidence_level = prediction[2][index] * 100
+    st.text(f"{prediction[0]} - {confidence_level}")
 
-    if confident_level > 90:
-        label = f"I am {confident_level:.2f} % sure that it is a {prediction[0]}"
+
+    if confidence_level > 90:
+        label = f"I am {confidence_level:.2f} % sure that it is a {prediction[0]}"
     else:
-        label = f"WARNING. It am {confident_level:.2f} % sure that it is a {prediction[0]}"
+        label = f"WARNING. It am {confidence_level:.2f} % sure that it is a {prediction[0]}"
     st.text(label)
     st.image(uploaded_file)
-    st.text(prediction[0])
+    st.text(f"prediction[0]")
     st.image(uploaded_file)
 
     #***streamlit run cat_vs_dog_classification.py***
