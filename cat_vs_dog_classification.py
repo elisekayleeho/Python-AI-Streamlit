@@ -43,7 +43,6 @@ if uploaded_file:
         label = f"WARNING. It am {confidence_level:.2f} % sure that it is a {prediction[0]}"
     st.text(label)
     st.image(uploaded_file)
-    st.text(f"prediction[0]")
-    st.image(uploaded_file)
+
 
     #***streamlit run cat_vs_dog_classification.py***
